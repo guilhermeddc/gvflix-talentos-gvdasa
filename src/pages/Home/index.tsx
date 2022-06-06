@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {NavBar} from 'components';
+import {NavBar} from 'shared/components';
 
 const Home: React.FC = () => {
   return (

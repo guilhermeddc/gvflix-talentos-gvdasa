@@ -2,13 +2,16 @@ import React from 'react';
 
 import {CssBaseline, ThemeProvider} from '@mui/material';
 import {Routes} from 'routes';
-import {theme} from 'styles/theme';
+import {AppProvider} from 'shared/context';
+import {theme} from 'shared/styles/theme';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
-      <CssBaseline />
+      <AppProvider>
+        <Routes />
+        <CssBaseline />
+      </AppProvider>
     </ThemeProvider>
   );
 };

@@ -1,23 +1,27 @@
 import React, {useCallback} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import {Container, Paper, Stack, Typography} from '@mui/material';
 import {Button, Form, NavBar, TextField} from 'shared/components';
-import {useAuth} from 'shared/hooks';
+import {userService} from 'shared/services/api/user';
 
-const Login: React.FC = () => {
-  const {signIn} = useAuth();
+const Register: React.FC = () => {
+  const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     async (data: any) => {
       try {
-        await signIn(data.email, data.senha);
+        await userService.userCreate({
+          ...data,
+        });
+
+        navigate('/');
       } catch (error: any) {
         // eslint-disable-next-line
         console.log('*** error', error);
       }
     },
-    [signIn],
+    [navigate],
   );
 
   return (
@@ -33,19 +37,20 @@ const Login: React.FC = () => {
           alignItems="center">
           <Stack component={Paper} p={5}>
             <Typography color="white" variant="h5" fontWeight={500}>
-              Entrar
+              Registrar
             </Typography>
 
             <Stack minWidth={272} spacing={2} mt={3} mb={5}>
+              <TextField name="nome" placeholder="Nome" />
               <TextField name="email" placeholder="E-mail" type="email" />
               <TextField name="senha" placeholder="Senha" type="password" />
             </Stack>
 
-            <Button label="Entrar" type="submit" variant="contained" />
+            <Button label="Registrar" type="submit" variant="contained" />
 
             <Stack mt={3} spacing={1}>
               <Typography color="#737373" variant="body2" fontSize={16}>
-                Novo no GVFLIX?{' '}
+                Já possui o GVFLIX?{' '}
                 <Typography
                   color="white"
                   sx={{
@@ -54,8 +59,8 @@ const Login: React.FC = () => {
                     '&:hover': {color: '#737373'},
                   }}
                   component={Link}
-                  to="/registrar">
-                  Se inscreva.
+                  to="/">
+                  Entrar.
                 </Typography>
               </Typography>
 
@@ -71,4 +76,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
