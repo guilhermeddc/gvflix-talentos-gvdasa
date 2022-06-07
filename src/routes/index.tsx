@@ -3,18 +3,18 @@ import {BrowserRouter} from 'react-router-dom';
 
 import {useAuth} from 'shared/hooks';
 
-import {AppRoutes} from './app.routes';
-import {PrivateRoutes} from './private.routes';
+import {AdminRoutes} from './admin.routes';
 import {PublicRoutes} from './public.routes';
+import {UserRoutes} from './user.routes';
 
 export const Routes: React.FC = () => {
   const {isAuthenticated, role} = useAuth();
 
   const Route =
     isAuthenticated && role === 1
-      ? PrivateRoutes
+      ? AdminRoutes
       : isAuthenticated && role === 2
-      ? AppRoutes
+      ? UserRoutes
       : PublicRoutes;
 
   return (

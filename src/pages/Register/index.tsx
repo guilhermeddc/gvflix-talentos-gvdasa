@@ -1,24 +1,31 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
 import {Container, Paper, Stack, Typography} from '@mui/material';
-import {Button, Form, NavBar, TextField} from 'shared/components';
+import {Alert, Button, Form, NavBar, TextField} from 'shared/components';
 import {userService} from 'shared/services/api/user';
 
 const Register: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     async (data: any) => {
+      setLoading(true);
       try {
         await userService.userCreate({
           ...data,
         });
 
+        setIsSuccess(true);
         navigate('/');
       } catch (error: any) {
-        // eslint-disable-next-line
-        console.log('*** error', error);
+        setIsError(true);
+      } finally {
+        setLoading(false);
       }
     },
     [navigate],
@@ -46,7 +53,12 @@ const Register: React.FC = () => {
               <TextField name="senha" placeholder="Senha" type="password" />
             </Stack>
 
-            <Button label="Registrar" type="submit" variant="contained" />
+            <Button
+              label="Registrar"
+              type="submit"
+              variant="contained"
+              loading={loading}
+            />
 
             <Stack mt={3} spacing={1}>
               <Typography color="#737373" variant="body2" fontSize={16}>
@@ -72,6 +84,20 @@ const Register: React.FC = () => {
           </Stack>
         </Stack>
       </Container>
+
+      <Alert
+        message="Usuário ou senha inválidos"
+        open={isError}
+        onClose={() => setIsError(false)}
+        severity="error"
+      />
+
+      <Alert
+        message="Usuário criado com sucesso"
+        open={isSuccess}
+        onClose={() => setIsSuccess(false)}
+        severity="error"
+      />
     </>
   );
 };

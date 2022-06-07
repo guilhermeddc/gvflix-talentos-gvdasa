@@ -1,11 +1,13 @@
 import React, {lazy, Suspense} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 
+import {LinearDeterminate} from 'shared/components';
+
 const Home = lazy(() => import('pages/Home'));
 
-export const AppRoutes: React.FC = () => {
+export const UserRoutes: React.FC = () => {
   return (
-    <Suspense fallback={<>loading...</>}>
+    <Suspense fallback={<LinearDeterminate />}>
       <Routes>
         <Route path="/" element={<Home />} />
 

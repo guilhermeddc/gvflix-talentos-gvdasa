@@ -19,20 +19,26 @@ interface IProps {
 }
 
 export const AuthProvider: React.FC<IProps> = ({children}) => {
-  const [user, setUser] = useState<IUser | undefined>();
-  const [role, setRole] = useState<number | undefined>();
+  const [user, setUser] = useState<IUser | undefined>(() => {
+    const userStorage = localStorage.getItem('@gvflix.user');
+
+    if (userStorage) return JSON.parse(userStorage);
+    return undefined;
+  });
 
   const signIn = useCallback(async (email: string, senha: string) => {
     const response = await authService.signIn(email, senha);
 
     if (response.codigoUsuario) {
-      setRole(response.role);
+      localStorage.setItem('@gvflix.user', JSON.stringify(response));
+
       setUser(response);
     }
   }, []);
 
   return (
-    <AuthContext.Provider value={{isAuthenticated: !!user, signIn, role, user}}>
+    <AuthContext.Provider
+      value={{isAuthenticated: !!user, signIn, role: user?.role, user}}>
       {children}
     </AuthContext.Provider>
   );

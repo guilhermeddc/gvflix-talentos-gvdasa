@@ -1,20 +1,25 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {Container, Paper, Stack, Typography} from '@mui/material';
-import {Button, Form, NavBar, TextField} from 'shared/components';
+import {Alert, Button, Form, NavBar, TextField} from 'shared/components';
 import {useAuth} from 'shared/hooks';
 
 const Login: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   const {signIn} = useAuth();
 
   const handleSubmit = useCallback(
     async (data: any) => {
+      setLoading(true);
       try {
         await signIn(data.email, data.senha);
       } catch (error: any) {
-        // eslint-disable-next-line
-        console.log('*** error', error);
+        setIsError(true);
+      } finally {
+        setLoading(false);
       }
     },
     [signIn],
@@ -41,7 +46,12 @@ const Login: React.FC = () => {
               <TextField name="senha" placeholder="Senha" type="password" />
             </Stack>
 
-            <Button label="Entrar" type="submit" variant="contained" />
+            <Button
+              label="Entrar"
+              type="submit"
+              variant="contained"
+              loading={loading}
+            />
 
             <Stack mt={3} spacing={1}>
               <Typography color="#737373" variant="body2" fontSize={16}>
@@ -67,6 +77,13 @@ const Login: React.FC = () => {
           </Stack>
         </Stack>
       </Container>
+
+      <Alert
+        message="Usuário ou senha inválidos"
+        open={isError}
+        onClose={() => setIsError(false)}
+        severity="error"
+      />
     </>
   );
 };
