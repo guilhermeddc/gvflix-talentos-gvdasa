@@ -4,3 +4,6 @@ export * from './TextField';
 export * from './Form';
 export * from './Alert';
 export * from './LinearDeterminate';
+export * from './DialogInfo';
+export * from './Container';
+export * from './ListFilms';

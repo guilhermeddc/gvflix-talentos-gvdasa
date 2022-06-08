@@ -1,8 +1,15 @@
 import React, {useCallback, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
-import {Container, Paper, Stack, Typography} from '@mui/material';
-import {Alert, Button, Form, NavBar, TextField} from 'shared/components';
+import {Paper, Stack, Typography} from '@mui/material';
+import {
+  Container,
+  Alert,
+  Button,
+  Form,
+  NavBar,
+  TextField,
+} from 'shared/components';
 import {userService} from 'shared/services/api/user';
 
 const Register: React.FC = () => {

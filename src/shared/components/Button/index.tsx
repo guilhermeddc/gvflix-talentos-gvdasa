@@ -19,7 +19,7 @@ export const Button: React.FC<IProps> = ({
   return (
     <MuiButton
       {...props}
-      sx={{height: 49, minWidth: 158}}
+      sx={{height: 44, minWidth: 158}}
       disabled={loading || props.disabled}>
       <Typography fontWeight={800} textTransform="capitalize">
         {loading ? (

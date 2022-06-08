@@ -4,7 +4,7 @@ import {Stack} from '@mui/material';
 import {morbius} from 'shared/assets';
 import {NavBar} from 'shared/components';
 
-import {Preview} from './modules';
+import {FilmCatalog, Preview} from './modules';
 
 const Home: React.FC = () => {
   return (
@@ -20,6 +20,7 @@ const Home: React.FC = () => {
       }}>
       <NavBar />
       <Preview />
+      <FilmCatalog />
     </Stack>
   );
 };

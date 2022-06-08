@@ -1,8 +1,15 @@
 import React, {useCallback, useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import {Container, Paper, Stack, Typography} from '@mui/material';
-import {Alert, Button, Form, NavBar, TextField} from 'shared/components';
+import {Paper, Stack, Typography} from '@mui/material';
+import {
+  Container,
+  Alert,
+  Button,
+  Form,
+  NavBar,
+  TextField,
+} from 'shared/components';
 import {useAuth} from 'shared/hooks';
 
 const Login: React.FC = () => {

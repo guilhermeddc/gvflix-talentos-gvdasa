@@ -1,9 +1,10 @@
 import React from 'react';
 
 import {ExpandMoreRounded, SearchRounded} from '@mui/icons-material';
-import {AppBar, Container, IconButton, Stack, Toolbar} from '@mui/material';
+import {AppBar, IconButton, Stack, Toolbar} from '@mui/material';
 import {logo, user} from 'shared/assets';
 
+import {Container} from '../Container';
 import {Link} from './components/Link';
 
 interface IProps {
@@ -19,13 +20,13 @@ export const NavBar: React.FC<IProps> = ({loginPage = false}) => {
           'linear-gradient(180deg, #090909 -1445%, rgba(9, 9, 9, 0) 829.61%)',
       }}
       elevation={0}>
-      <Container maxWidth="xl">
+      <Container paddingRight>
         <Toolbar disableGutters>
           <Stack
             height={80}
             direction="row"
             paddingY={3.5}
-            paddingX={1.7}
+            paddingX={{xs: 1.7, sm: 0}}
             flex={1}>
             <img src={logo} alt="GVFLIX" />
             {!loginPage && (
