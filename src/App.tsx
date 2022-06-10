@@ -1,4 +1,5 @@
 import React from 'react';
+import 'shared/styles/styles.css';
 
 import {CssBaseline, ThemeProvider} from '@mui/material';
 import {Routes} from 'routes';

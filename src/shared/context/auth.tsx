@@ -6,6 +6,7 @@ import {IUser} from 'shared/services/api/user';
 export interface IAuthContext {
   isAuthenticated: boolean;
   signIn: (email: string, senha: string) => Promise<void>;
+  signOut: () => void;
   user: IUser | undefined;
   role: number | undefined;
 }
@@ -36,9 +37,21 @@ export const AuthProvider: React.FC<IProps> = ({children}) => {
     }
   }, []);
 
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@gvflix.user');
+
+    setUser(undefined);
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{isAuthenticated: !!user, signIn, role: user?.role, user}}>
+      value={{
+        isAuthenticated: !!user,
+        signIn,
+        signOut,
+        role: user?.role,
+        user,
+      }}>
       {children}
     </AuthContext.Provider>
   );
