@@ -10,9 +10,10 @@ import {DialogInfo} from 'shared/components/DialogInfo';
 
 interface IProps {
   img: string;
+  title: string;
 }
 
-export const Film: React.FC<IProps> = ({img}) => {
+export const Film: React.FC<IProps> = ({img, title}) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -76,7 +77,7 @@ export const Film: React.FC<IProps> = ({img}) => {
             </Stack>
 
             <Typography fontWeight={500} fontSize={20}>
-              Morbius
+              {title}
             </Typography>
 
             <Typography fontWeight={500} fontSize={12} color="#9E9E9E">
@@ -89,7 +90,7 @@ export const Film: React.FC<IProps> = ({img}) => {
       <DialogInfo
         openDialog={openDialog}
         onClose={() => setOpenDialog(false)}
-        title="Morbius"
+        title={title}
         content="Sidelined after an accident, hotshot Los Angeles lawyer Mickey Halley restarts his career — and his trademark Lincoln — when he takes on a murder case."
       />
     </>

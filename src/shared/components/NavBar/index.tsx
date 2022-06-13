@@ -13,11 +13,13 @@ import {Link} from './components/Link';
 interface IProps {
   loginPage?: boolean;
   profilePage?: boolean;
+  dashboardPage?: boolean;
 }
 
 export const NavBar: React.FC<IProps> = ({
   loginPage = false,
   profilePage = false,
+  dashboardPage = false,
 }) => {
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ export const NavBar: React.FC<IProps> = ({
       elevation={0}>
       <Container paddingRight>
         <Toolbar disableGutters>
-          {!profilePage ? (
+          {!profilePage || !dashboardPage ? (
             <Stack
               height={80}
               direction="row"
@@ -67,12 +69,14 @@ export const NavBar: React.FC<IProps> = ({
                 justifyContent="space-between"
                 alignItems="center"
                 flex={1}>
-                <Button
-                  color="inherit"
-                  startIcon={<ArrowBackRounded />}
-                  label="Voltar para o início"
-                  onClick={() => navigate('/')}
-                />
+                {!dashboardPage && (
+                  <Button
+                    color="inherit"
+                    startIcon={<ArrowBackRounded />}
+                    label="Voltar para o início"
+                    onClick={() => navigate('/')}
+                  />
+                )}
 
                 <img src={logo} alt="GVFLIX" />
                 <UserMenu profilePage={profilePage} />

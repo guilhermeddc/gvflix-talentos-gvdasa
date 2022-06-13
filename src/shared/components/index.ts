@@ -7,3 +7,4 @@ export * from './LinearDeterminate';
 export * from './DialogInfo';
 export * from './Container';
 export * from './ListFilms';
+export * from './DialogFilm';
