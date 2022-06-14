@@ -1,16 +1,21 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {CloseRounded} from '@mui/icons-material';
 import {Dialog, DialogContent, IconButton, Stack} from '@mui/material';
 import {Alert, Button, TextField, Form} from 'shared/components';
-import {filmsService} from 'shared/services/api/films';
+import {filmsService, IFilm} from 'shared/services/api/films';
 
 interface IProps {
   openDialog: boolean;
   onClose: () => void;
+  initialData?: IFilm;
 }
 
-export const DialogFilm: React.FC<IProps> = ({openDialog, onClose}) => {
+export const DialogFilm: React.FC<IProps> = ({
+  openDialog,
+  onClose,
+  initialData,
+}) => {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [image, setImage] = useState('');
@@ -27,7 +32,14 @@ export const DialogFilm: React.FC<IProps> = ({openDialog, onClose}) => {
     async (data: any) => {
       setLoading(true);
       try {
-        await filmsService.createFilm(data);
+        initialData
+          ? await filmsService.updateFilm({
+              codigoFilme: initialData.codigoFilme,
+              descricao: data.descricao,
+              titulo: data.titulo,
+              urlImagem: data.urlImagem,
+            })
+          : await filmsService.createFilm(data);
 
         formRef.current?.reset();
 
@@ -38,8 +50,12 @@ export const DialogFilm: React.FC<IProps> = ({openDialog, onClose}) => {
         setLoading(false);
       }
     },
-    [handleClose],
+    [handleClose, initialData],
   );
+
+  useEffect(() => {
+    initialData && setImage(initialData.urlImagem);
+  }, [initialData]);
 
   return (
     <>
@@ -51,6 +67,7 @@ export const DialogFilm: React.FC<IProps> = ({openDialog, onClose}) => {
             <CloseRounded fontSize="small" />
           </IconButton>
         </Stack>
+
         <Stack
           component={DialogContent}
           padding={0}
@@ -70,12 +87,15 @@ export const DialogFilm: React.FC<IProps> = ({openDialog, onClose}) => {
             justifyContent="flex-end"
             p={4.3}
             height={228}
-            width={544}></Stack>
+            width={544}
+          />
         </Stack>
+
         <Stack component={DialogContent} bgcolor="#1B1B1B" p={4.3} spacing={1}>
           <Stack
             component={Form}
             onSubmit={handleSubmit}
+            initialData={initialData}
             ref={formRef}
             spacing={3}>
             <TextField name="titulo" placeholder="Titulo" />
