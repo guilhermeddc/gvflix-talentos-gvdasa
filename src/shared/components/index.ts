@@ -8,3 +8,4 @@ export * from './DialogInfo';
 export * from './Container';
 export * from './ListFilms';
 export * from './DialogFilm';
+export * from './DialogConfirm';

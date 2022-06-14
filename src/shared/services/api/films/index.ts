@@ -30,4 +30,25 @@ const createFilm = async (film: IFilm): Promise<IFilm> => {
   return response.data;
 };
 
-export const filmsService = {getFilms, createFilm};
+const updateFilm = async (film: IFilm): Promise<IFilm> => {
+  const payload = {
+    codigoUsuarioLogado: 1,
+    dto: {
+      codigoFilme: film.codigoFilme,
+      titulo: film.titulo,
+      descricao: film.descricao,
+      urlImagem: film.urlImagem,
+      filmesAtores: [],
+    },
+  };
+
+  const response = await api.put<IFilm>(`/filmes/${film.codigoFilme}`, payload);
+
+  return response.data;
+};
+
+const deleteFilm = async (codigoFilme: number): Promise<void> => {
+  await api.delete(`/filmes/${codigoFilme}`);
+};
+
+export const filmsService = {getFilms, createFilm, deleteFilm, updateFilm};

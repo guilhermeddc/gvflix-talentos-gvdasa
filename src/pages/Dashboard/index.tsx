@@ -3,12 +3,16 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {AddRounded, DeleteRounded, EditRounded} from '@mui/icons-material';
 import {Container, IconButton, Paper, Stack, Typography} from '@mui/material';
 import {DataGrid} from '@mui/x-data-grid';
-import {Button, DialogFilm, NavBar} from 'shared/components';
+import {Button, DialogConfirm, DialogFilm, NavBar} from 'shared/components';
 import {filmsService, IFilm} from 'shared/services/api/films';
 
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<IFilm[]>([]);
+  const [dataItem, setDataItem] = useState<IFilm | undefined>();
+  const [dataId, setDataId] = useState<number | undefined>();
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleGetFilms = useCallback(async () => {
     const response = await filmsService.getFilms();
@@ -23,6 +27,35 @@ const Dashboard: React.FC = () => {
   const handleCloseDialog = useCallback(async () => {
     setOpenDialog(false);
 
+    await handleGetFilms();
+  }, [handleGetFilms]);
+
+  const handleOpenEditDialog = useCallback((film: IFilm) => {
+    setDataItem(film);
+
+    setOpenDialog(true);
+  }, []);
+
+  const handleOpenDeleteDialog = useCallback((id: number) => {
+    setOpenDeleteDialog(true);
+
+    setDataId(id);
+  }, []);
+
+  const handleDeleteFilm = useCallback(async () => {
+    setLoading(true);
+    setOpenDeleteDialog(false);
+
+    dataId && (await filmsService.deleteFilm(dataId));
+
+    await handleGetFilms();
+    setLoading(false);
+  }, [dataId, handleGetFilms]);
+
+  const handleCloseDeleteDialog = useCallback(async () => {
+    setOpenDeleteDialog(false);
+
+    setDataId(undefined);
     await handleGetFilms();
   }, [handleGetFilms]);
 
@@ -76,13 +109,17 @@ const Dashboard: React.FC = () => {
                   minWidth: 150,
                   align: 'center',
                   headerAlign: 'center',
-                  renderCell: () => (
+                  renderCell: (params) => (
                     <>
-                      <IconButton>
+                      <IconButton
+                        onClick={() => handleOpenEditDialog(params.row)}>
                         <EditRounded />
                       </IconButton>
 
-                      <IconButton>
+                      <IconButton
+                        onClick={() =>
+                          handleOpenDeleteDialog(params.row.codigoFilme)
+                        }>
                         <DeleteRounded />
                       </IconButton>
                     </>
@@ -112,7 +149,18 @@ const Dashboard: React.FC = () => {
         </Stack>
       </Container>
 
-      <DialogFilm openDialog={openDialog} onClose={handleCloseDialog} />
+      <DialogFilm
+        openDialog={openDialog}
+        onClose={handleCloseDialog}
+        initialData={dataItem}
+      />
+
+      <DialogConfirm
+        openDialog={openDeleteDialog}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleDeleteFilm}
+        loading={loading}
+      />
     </Stack>
   );
 };
