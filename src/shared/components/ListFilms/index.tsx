@@ -46,15 +46,20 @@ export const ListFilms: React.FC<IProps> = ({title}) => {
       <Box marginY={3} ml={{xs: 1, sm: 3}}>
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={180}
+          spaceBetween={170}
           slidesPerView={6}
           navigation
           scrollbar={{draggable: true}}>
           {data.map((film) => (
             <SwiperSlide key={film.codigoFilme}>
-              <Film img={film.urlImagem} title={film.titulo} />
+              <Film
+                img={film.urlImagem}
+                title={film.titulo}
+                description={film.descricao}
+              />
             </SwiperSlide>
           ))}
+          <SwiperSlide />
         </Swiper>
       </Box>
     </Stack>

@@ -19,6 +19,7 @@ interface IProps {
   onClose: () => void;
   title: string;
   content: string;
+  image?: string;
 }
 
 export const DialogInfo: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ export const DialogInfo: React.FC<IProps> = ({
   onClose,
   title,
   content,
+  image = morbiusDialog
 }) => {
   return (
     <Dialog open={openDialog} onClose={onClose}>
@@ -40,7 +42,7 @@ export const DialogInfo: React.FC<IProps> = ({
         component={DialogContent}
         padding={0}
         sx={{
-          backgroundImage: `url(${morbiusDialog})`,
+          backgroundImage: `url(${image})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',

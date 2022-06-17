@@ -3,8 +3,11 @@ import React from 'react';
 import {CheckCircleRounded} from '@mui/icons-material';
 import {Container, Stack, Typography} from '@mui/material';
 import {NavBar} from 'shared/components';
+import {useAuth} from 'shared/hooks';
 
 const Profile: React.FC = () => {
+  const {user} = useAuth();
+
   return (
     <Stack
       width="100%"
@@ -42,7 +45,7 @@ const Profile: React.FC = () => {
           }}>
           <Stack spacing={1} direction="row" justifyContent="space-between">
             <Typography fontSize={16} fontWeight={600} color="black">
-              Igor Pinheiro do Nascimento
+              {user?.nome}
             </Typography>
 
             <Typography fontSize={16} fontWeight={400} color="#0071EB">
@@ -51,7 +54,7 @@ const Profile: React.FC = () => {
           </Stack>
 
           <Typography fontSize={16} fontWeight={400} color="#737373">
-            inascimento@gvdasa.com.br
+            {user?.email}
           </Typography>
         </Stack>
 

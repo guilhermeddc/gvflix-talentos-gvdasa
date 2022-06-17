@@ -23,3 +23,25 @@ export const Routes: React.FC = () => {
     </BrowserRouter>
   );
 };
+
+/*
+  if (isAuthenticated && role === 1) {
+    return (
+      <BrowserRouter>
+        <AdminRoutes />
+      </BrowserRouter>
+    );
+  } else if (isAuthenticated && role === 2) {
+    return (
+      <BrowserRouter>
+        <UserRoutes />
+      </BrowserRouter>
+    );
+  } else {
+    return (
+      <BrowserRouter>
+        <PublicRoutes />
+      </BrowserRouter>
+    );
+  }
+  */
