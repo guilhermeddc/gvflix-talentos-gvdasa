@@ -48,6 +48,7 @@ export const ListFilms: React.FC<IProps> = ({title}) => {
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={180}
           slidesPerView={6}
+          loop={true}
           navigation
           scrollbar={{draggable: true}}>
           {data.map((film) => (
