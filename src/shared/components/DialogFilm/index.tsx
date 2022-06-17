@@ -99,12 +99,12 @@ export const DialogFilm: React.FC<IProps> = ({
             ref={formRef}
             spacing={3}>
             <TextField name="titulo" placeholder="Titulo" />
-            <TextField name="descricao" placeholder="Descrição" />
             <TextField
               name="urlImagem"
-              placeholder="Imagem"
+              placeholder="Url da imagem"
               onChange={({target}) => setImage(target.value)}
             />
+            <TextField name="descricao" placeholder="Descrição" multiline rows={3}/>
 
             <Stack spacing={3} direction="row">
               <Button

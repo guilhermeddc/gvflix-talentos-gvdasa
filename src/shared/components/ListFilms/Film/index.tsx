@@ -9,11 +9,12 @@ import {IconButton, Paper, Stack, Typography} from '@mui/material';
 import {DialogInfo} from 'shared/components/DialogInfo';
 
 interface IProps {
+  description: string;
   img: string;
   title: string;
 }
 
-export const Film: React.FC<IProps> = ({img, title}) => {
+export const Film: React.FC<IProps> = ({img, title, description}) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -91,7 +92,8 @@ export const Film: React.FC<IProps> = ({img, title}) => {
         openDialog={openDialog}
         onClose={() => setOpenDialog(false)}
         title={title}
-        content="Sidelined after an accident, hotshot Los Angeles lawyer Mickey Halley restarts his career — and his trademark Lincoln — when he takes on a murder case."
+        image={img}
+        content={description}
       />
     </>
   );
